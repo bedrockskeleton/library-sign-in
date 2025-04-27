@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center g-4">
+        <div class="col-md-4">
+            <div class="card h-100 p-4">
+                <h2 class="text-center mb-3">Hello!</h2>
+                <p>Welcome to the <strong>Barger-Richardson Learning Resource Center</strong>!
+                    This is the attendance management system, where students can be signed in and out of the library.
+                    Log in as a work-study to get started
+                </p>
+                <p class="text-center">
+                    Created by Brock Skelton for CSM VI
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-4 text-center">
+                <h2 class="mb-3">{{ count }}</h2>
+                {% if count == 1 %}
+                    <h4>Student Here</h4>
+                {% else %}
+                    <h4>Students Here</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

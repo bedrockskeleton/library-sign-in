@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="container">
+    <h1 class="my-4">Library Attendance Dashboard</h1>
+
+    <div class="mb-3">
+        <form id="export-form" method="get" action="{% url 'dashboard:export_records' %}">
+            <input type="hidden" name="start_date" value="{{ request.GET.start_date }}">
+            <input type="hidden" name="end_date" value="{{ request.GET.end_date }}">
+            <button type="submit" class="btn btn-success">Export to Excel</button>
+        </form>
+    </div>
+    <div class="card mb-4 p-3">
+        <form method="get" class="form-inline">
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
+                </div>
+                <div class="col-md-4 mb-2 align-self-end">
+                    <button type="submit" class="btn btn-primary">Apply Filter</button>
+                    <a href="{% url 'dashboard:data' %}" class="btn btn-secondary">Reset</a>
+                </div>
+            </div>
+        </form>        
+    </div>    
+
+    <table id="records-table" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    <a href="?sort_by=student_id&sort_order={% if sort_by == 'student_id' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                        Student ID
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=first_name&sort_order={% if sort_by == 'first_name' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                        First Name
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=last_name&sort_order={% if sort_by == 'last_name' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                        Last Name
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=reason&sort_order={% if sort_by == 'reason' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                        Reason
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=time_in&sort_order={% if sort_by == 'time_in' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                        Date
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=time_in&sort_order={% if sort_by == 'time_in' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                        Time In
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=time_out&sort_order={% if sort_by == 'time_out' and sort_order == 'asc' %}desc{% else %}asc{% endif %}">
+                        Time Out
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td style="display: none;">{{ record.student.id }}</td>
+                <td>{{ record.student_id }}</td>
+                <td>{{ record.first_name }}</td>
+                <td>{{ record.last_name }}</td>
+                <td>{{ record.formatted_reason }}</td>
+                <td>{{ record.formatted_date }}</td>  <!-- Display date in mm/dd/yy format -->
+                <td>{{ record.time_in }}</td>
+                <td>{{ record.time_out }}</td>
+                {% if user.is_superuser %}
+                    <td>
+                        <form action="{% url 'sign_in:delete_record' record.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('Delete this record?');">Delete</button>
+                        </form>
+                    </td>
+                {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script src="{% static 'dashboard/js/sort_table.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div class="card p-4" style="width: 30rem;">
+        <h1>{{ action }} Student Reference</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">{{ action }} Reference</button>
+        </form>
+        <br>
+        <a href="{% url 'reports:reference_list' %}">Back to Reference List</a>
+      </div>
+</div>
+{% endblock %}

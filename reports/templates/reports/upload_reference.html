@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Upload Student ID Reference Spreadsheet</h2>
+
+{% if error %}
+    <div style="color: red;">{{ error }}</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+{% endblock %}

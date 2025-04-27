@@ -1,0 +1,11 @@
+body {
+    padding: 2rem;
+    background-color: #f8f9fa;
+}
+.navbar {
+    margin-bottom: 2rem;
+}
+.bg-dark {
+    --bs-bg-opacity: 1;
+    background-color: #06357A !important;
+}

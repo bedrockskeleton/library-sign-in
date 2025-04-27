@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Map Columns</h2>
+
+<p>Please match the columns from your spreadsheet to the correct fields:</p>
+
+<form method="post" action="{% url 'reports:process_reference_mapping' %}">
+    {% csrf_token %}
+    
+    <label for="id_col">Student ID Column:</label>
+    <select name="id_col" id="id_col" required>
+        {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label for="first_col">First Name Column:</label>
+    <select name="first_col" id="first_col" required>
+        {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label for="last_col">Last Name Column:</label>
+    <select name="last_col" id="last_col" required>
+        {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <button type="submit">Import Data</button>
+</form>
+{% endblock %}

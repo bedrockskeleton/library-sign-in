@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card p-4" style="width: 400px;">
+        <h2 class="text-center mb-4">{{ action }} Workstudy</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">{{ action }} Workstudy</button>
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="{% url 'users:workstudy_list' %}" class="btn btn-link">Back to Workstudy List</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

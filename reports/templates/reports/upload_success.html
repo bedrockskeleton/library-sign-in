@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Upload Successful!</h2>
+
+<p>Your reference spreadsheet has been successfully imported.</p>
+
+<a href="{% url 'reports:reference_list' %}">
+    <button>View Student References</button>
+</a>
+
+<a href="{% url 'reports:upload_reference' %}" style="margin-left: 10px;">
+    <button>Upload Another</button>
+</a>
+{% endblock %}
